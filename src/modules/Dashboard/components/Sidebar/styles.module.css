@@ -1,0 +1,8 @@
+.sidebar {
+    grid-area: sd;
+    height: calc(100vh - 50px);
+}
+
+.sidebarItem {
+    padding: 15px 10px 15px 10px;
+}
