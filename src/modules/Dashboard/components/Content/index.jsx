@@ -27,15 +27,14 @@ const Content = () => {
   const [items, updateItems] = useState(initState);
 
   const addTodoItem = () => {
-    const newItems = items.concat([
+    updateItems([
+      ...items,
       {
-        id: items.length,
-        title: "title3",
-        description: "description3",
+        id: items.length + 1,
+        title: `title${items.length + 1}`,
+        description: `description${items.length + 1}`,
       },
     ]);
-
-    updateItems(newItems);
   };
 
   return (

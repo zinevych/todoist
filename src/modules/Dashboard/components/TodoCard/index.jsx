@@ -1,8 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { Grid } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  IconButton,
+  CardContent,
+  Typography,
+  Grid,
+} from "@material-ui/core";
+import Close from "@material-ui/icons/Close";
+
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,21 +27,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line react/prop-types
 const TodoCard = ({ title, description }) => {
   const classes = useStyles();
 
   return (
     <Grid item>
       <Card className={classes.card}>
+        <CardHeader
+          action={
+            <IconButton aria-label="settings">
+              <Close />
+            </IconButton>
+          }
+          title={title}
+        />
         <CardContent className={classes.content}>
-          <Typography
+          {/* <Typography
             className="MuiTypography--heading"
             variant="h6"
             gutterBottom
           >
             {title}
-          </Typography>
+          </Typography> */}
           <Typography className="MuiTypography--subheading" variant="caption">
             {description}
           </Typography>
@@ -42,6 +56,11 @@ const TodoCard = ({ title, description }) => {
       </Card>
     </Grid>
   );
+};
+
+TodoCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default TodoCard;

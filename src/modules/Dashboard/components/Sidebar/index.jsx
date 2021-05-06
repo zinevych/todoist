@@ -5,7 +5,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { InboxIcon, StarIcon } from "@material-ui/icons";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import StarIcon from "@material-ui/icons/Star";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 
