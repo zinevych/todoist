@@ -1,12 +1,13 @@
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import ListItemText from "@material-ui/core/ListItemText";
-import StarIcon from "@material-ui/icons/Star";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import { InboxIcon, StarIcon } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-// import styles from "./styles.module.css";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   drawer: {
@@ -30,7 +31,7 @@ const Sidebar = () => {
       classes={{ paper: classes.drawerPaper }}
     >
       <List>
-        <ListItem button>
+        <ListItem button component={RouterLink} to="/app/inbox">
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>

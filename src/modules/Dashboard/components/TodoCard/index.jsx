@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoCard = () => {
+// eslint-disable-next-line react/prop-types
+const TodoCard = ({ title, description }) => {
   const classes = useStyles();
 
   return (
@@ -32,10 +33,10 @@ const TodoCard = () => {
             variant="h6"
             gutterBottom
           >
-            Title
+            {title}
           </Typography>
           <Typography className="MuiTypography--subheading" variant="caption">
-            Description
+            {description}
           </Typography>
         </CardContent>
       </Card>

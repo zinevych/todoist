@@ -12,7 +12,7 @@ ReactDOM.render(
         <Route path="/login">
           <LoginView />
         </Route>
-        <Route path="/dashboard">
+        <Route path="/app">
           <DashboardView />
         </Route>
       </Switch>

@@ -1,6 +1,12 @@
+// material
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
-// import styles from "./styles.module.css";
+
+// Router
+import { Switch, Route } from "react-router-dom";
+// import { matchPath } from "react-router";
+
+// component
 import Header from "../../modules/Dashboard/components/Header";
 import Sidebar from "../../modules/Dashboard/components/Sidebar";
 import Content from "../../modules/Dashboard/components/Content";
@@ -25,15 +31,22 @@ const useStyles = makeStyles((theme) => ({
 const DashboardView = () => {
   const classes = useStyles();
 
+  // const match = matchPath();
+
+  // console.log(match);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Header />
       <Sidebar />
-
-      <main className={classes.appContent}>
-        <Content />
-      </main>
+      <Switch>
+        <Route path="/app/inbox">
+          <main className={classes.appContent}>
+            <Content />
+          </main>
+        </Route>
+      </Switch>
     </div>
   );
 };
