@@ -12,9 +12,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 import PropTypes from "prop-types";
 
-const EditTodo = ({ open, handleClose }) => {
+const EditTodo = ({ open, handleClose, addTodoItem }) => {
   const [state, setState] = useState({
-    type: "",
+    title: "",
+    desc: "",
+  });
+
+  const [errorState, setErrorState] = useState({
+    title: { status: false, text: "" },
+    desc: { status: false, text: "" },
   });
 
   const handleChange = (event) => {
@@ -25,10 +31,51 @@ const EditTodo = ({ open, handleClose }) => {
     });
   };
 
+  const validateForm = () => {
+    let newState = errorState;
+    if (!state.title) {
+      newState = {
+        ...newState,
+        title: {
+          status: true,
+          text: "Title is required",
+        },
+      };
+    }
+
+    if (!state.desc) {
+      newState = {
+        ...newState,
+        desc: {
+          status: true,
+          text: "Description is required",
+        },
+      };
+    }
+
+    if (state.desc && state.title) {
+      newState = {
+        title: { status: false, text: "" },
+        desc: { status: false, text: "" },
+      };
+    }
+
+    setErrorState(newState);
+    return newState;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const statuses = validateForm();
 
-    handleClose();
+    if (!statuses.title.status && !statuses.desc.status) {
+      addTodoItem({
+        title: state.title,
+        description: state.desc,
+      });
+
+      handleClose();
+    }
   };
 
   return (
@@ -45,25 +92,33 @@ const EditTodo = ({ open, handleClose }) => {
             autoFocus
             margin="dense"
             id="title"
+            name="title"
             label="Title"
             type="text"
             fullWidth
+            onChange={handleChange}
+            error={errorState.title.status}
+            helperText={errorState.title.text}
           />
           <TextField
             autoFocus
             margin="dense"
             id="desc"
+            name="desc"
             label="Description"
             type="text"
+            multiline
+            rows={4}
             fullWidth
+            onChange={handleChange}
           />
-          <InputLabel htmlFor="age-native-simple">Type</InputLabel>
+          <InputLabel htmlFor="type-native-simple">Type</InputLabel>
           <Select
             native
             value={state.type}
             onChange={handleChange}
             inputProps={{
-              name: "age",
+              name: "type",
               id: "age-native-simple",
             }}
           >
@@ -89,6 +144,7 @@ const EditTodo = ({ open, handleClose }) => {
 EditTodo.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  addTodoItem: PropTypes.func.isRequired,
 };
 
 export default EditTodo;

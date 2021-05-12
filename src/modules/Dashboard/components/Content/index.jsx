@@ -28,16 +28,16 @@ const Content = () => {
   const [items, updateItems] = useState(initState);
   const [open, setOpen] = useState(false);
 
-  // const addTodoItem = () => {
-  //   updateItems([
-  //     ...items,
-  //     {
-  //       id: items.length + 1,
-  //       title: `title${items.length + 1}`,
-  //       description: `description${items.length + 1}`,
-  //     },
-  //   ]);
-  // };
+  const addTodoItem = ({ title, description }) => {
+    updateItems([
+      ...items,
+      {
+        id: items.length + 1,
+        title,
+        description,
+      },
+    ]);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,7 +61,11 @@ const Content = () => {
           </Button>
         </Grid>
       </Grid>
-      <EditTodo open={open} handleClose={handleClose} />
+      <EditTodo
+        open={open}
+        handleClose={handleClose}
+        addTodoItem={addTodoItem}
+      />
       <div>
         <Grid container spacing={1}>
           {items.map((item) => (
