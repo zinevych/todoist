@@ -3,6 +3,7 @@ import { Button, Grid } from "@material-ui/core";
 
 import React, { useState } from "react";
 import TodoCard from "../TodoCard";
+import EditTodo from "../EditTodo";
 
 const initState = [
   {
@@ -25,16 +26,25 @@ const initState = [
 const Content = () => {
   // eslint-disable-next-line no-unused-vars
   const [items, updateItems] = useState(initState);
+  const [open, setOpen] = useState(false);
 
-  const addTodoItem = () => {
-    updateItems([
-      ...items,
-      {
-        id: items.length + 1,
-        title: `title${items.length + 1}`,
-        description: `description${items.length + 1}`,
-      },
-    ]);
+  // const addTodoItem = () => {
+  //   updateItems([
+  //     ...items,
+  //     {
+  //       id: items.length + 1,
+  //       title: `title${items.length + 1}`,
+  //       description: `description${items.length + 1}`,
+  //     },
+  //   ]);
+  // };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -45,12 +55,13 @@ const Content = () => {
             color="primary"
             fullWidth
             variant="contained"
-            onClick={addTodoItem}
+            onClick={handleClickOpen}
           >
             Add
           </Button>
         </Grid>
       </Grid>
+      <EditTodo open={open} handleClose={handleClose} />
       <div>
         <Grid container spacing={1}>
           {items.map((item) => (
