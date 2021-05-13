@@ -10,8 +10,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
+import { useForm, Controller } from "react-hook-form";
+
 import PropTypes from "prop-types";
 
+// eslint-disable-next-line no-unused-vars
 const EditTodo = ({ open, handleClose, addTodoItem }) => {
   const [state, setState] = useState({
     title: "",
@@ -23,6 +26,8 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
     desc: { status: false, text: "" },
   });
 
+  const { control, handleSubmit, errors } = useForm();
+
   const handleChange = (event) => {
     const { name } = event.target;
     setState({
@@ -31,6 +36,7 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
     });
   };
 
+  // eslint-disable-next-line no-unused-vars
   const validateForm = () => {
     let newState = errorState;
     if (!state.title) {
@@ -64,19 +70,21 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
     return newState;
   };
 
-  const handleSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const statuses = validateForm();
+    //   const statuses = validateForm();
 
-    if (!statuses.title.status && !statuses.desc.status) {
-      addTodoItem({
-        title: state.title,
-        description: state.desc,
-      });
+    //   if (!statuses.title.status && !statuses.desc.status) {
+    //     addTodoItem({
+    //       title: state.title,
+    //       description: state.desc,
+    //     });
 
-      handleClose();
-    }
+    //     handleClose();
+    //   }
   };
+
+  console.log(errors);
 
   return (
     <Dialog
@@ -84,11 +92,11 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle id="form-dialog-title">Add</DialogTitle>
         <DialogContent>
           <DialogContentText>Add/Update todo item</DialogContentText>
-          <TextField
+          {/* <TextField
             autoFocus
             margin="dense"
             id="title"
@@ -99,6 +107,21 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
             onChange={handleChange}
             error={errorState.title.status}
             helperText={errorState.title.text}
+          /> */}
+
+          <Controller
+            name="title"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...field}
+                error={errors?.title?.status}
+                helperText={errorState.title.text}
+              />
+            )}
           />
           <TextField
             autoFocus
