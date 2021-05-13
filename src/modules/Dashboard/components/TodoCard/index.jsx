@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoCard = ({ title, description }) => {
+// eslint-disable-next-line no-unused-vars
+const TodoCard = ({ id, title, description, remove }) => {
   const classes = useStyles();
 
   return (
@@ -35,7 +36,7 @@ const TodoCard = ({ title, description }) => {
       <Card className={classes.card}>
         <CardHeader
           action={
-            <IconButton aria-label="settings">
+            <IconButton aria-label="settings" onClick={() => remove({ id })}>
               <Close />
             </IconButton>
           }
@@ -59,8 +60,10 @@ const TodoCard = ({ title, description }) => {
 };
 
 TodoCard.propTypes = {
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
 export default TodoCard;

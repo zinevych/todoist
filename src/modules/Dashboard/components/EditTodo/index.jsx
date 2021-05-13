@@ -32,7 +32,7 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
   };
 
   const validateForm = () => {
-    let newState = errorState;
+    let newState = { ...errorState };
     if (!state.title) {
       newState = {
         ...newState,
@@ -111,6 +111,8 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
             rows={4}
             fullWidth
             onChange={handleChange}
+            error={errorState.desc.status}
+            helperText={errorState.desc.text}
           />
           <InputLabel htmlFor="type-native-simple">Type</InputLabel>
           <Select

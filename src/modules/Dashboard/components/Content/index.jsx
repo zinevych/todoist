@@ -39,6 +39,18 @@ const Content = () => {
     ]);
   };
 
+  const removeTodoItem = ({ id }) => {
+    let newItems = [...items];
+    newItems = newItems.reduce((acc, item) => {
+      if (item.id !== id) {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+
+    updateItems(newItems);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,9 +82,11 @@ const Content = () => {
         <Grid container spacing={1}>
           {items.map((item) => (
             <TodoCard
+              id={item.id}
               title={item.title}
               description={item.description}
               key={item.id}
+              remove={removeTodoItem}
             />
           ))}
         </Grid>
