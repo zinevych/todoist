@@ -1,3 +1,5 @@
+import { addTodoItem } from "../actions/actionTypes";
+
 const initialState = [
   {
     id: 1,
@@ -21,8 +23,16 @@ const initialState = [
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_TODO_ITEM":
-      return { ...state };
+    case addTodoItem:
+      return [
+        ...state,
+        {
+          id: state.length + 1,
+          title: action.payload.title,
+          description: action.payload.desc,
+          type: action.payload.type,
+        },
+      ];
     default:
       return state;
   }

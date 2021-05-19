@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
@@ -10,7 +12,10 @@ import DashboardView from "./views/DashboardView";
 import rootReducer from "./rootReducer";
 import "./index.css";
 
-const store = createStore(rootReducer);
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <React.StrictMode>
