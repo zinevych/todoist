@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 
 import Button from "@material-ui/core/Button";
@@ -8,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
+import FormGroup from "@material-ui/core/FormGroup";
 
 import { useForm, Controller } from "react-hook-form";
 
@@ -16,75 +17,20 @@ import PropTypes from "prop-types";
 
 // eslint-disable-next-line no-unused-vars
 const EditTodo = ({ open, handleClose, addTodoItem }) => {
-  const [state, setState] = useState({
-    title: "",
-    desc: "",
-  });
+  const { control, handleSubmit, getValues, errors } = useForm();
 
-  const [errorState, setErrorState] = useState({
-    title: { status: false, text: "" },
-    desc: { status: false, text: "" },
-  });
+  const onSubmit = () => {
+    if (!errors) {
+      const values = getValues();
+      addTodoItem({
+        title: values.title,
+        description: values.desc,
+        type: values.type,
+      });
 
-  const { control, handleSubmit, errors } = useForm();
-
-  const handleChange = (event) => {
-    const { name } = event.target;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const validateForm = () => {
-    let newState = errorState;
-    if (!state.title) {
-      newState = {
-        ...newState,
-        title: {
-          status: true,
-          text: "Title is required",
-        },
-      };
+      handleClose();
     }
-
-    if (!state.desc) {
-      newState = {
-        ...newState,
-        desc: {
-          status: true,
-          text: "Description is required",
-        },
-      };
-    }
-
-    if (state.desc && state.title) {
-      newState = {
-        title: { status: false, text: "" },
-        desc: { status: false, text: "" },
-      };
-    }
-
-    setErrorState(newState);
-    return newState;
   };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    //   const statuses = validateForm();
-
-    //   if (!statuses.title.status && !statuses.desc.status) {
-    //     addTodoItem({
-    //       title: state.title,
-    //       description: state.desc,
-    //     });
-
-    //     handleClose();
-    //   }
-  };
-
-  console.log(errors);
 
   return (
     <Dialog
@@ -96,60 +42,71 @@ const EditTodo = ({ open, handleClose, addTodoItem }) => {
         <DialogTitle id="form-dialog-title">Add</DialogTitle>
         <DialogContent>
           <DialogContentText>Add/Update todo item</DialogContentText>
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="title"
-            name="title"
-            label="Title"
-            type="text"
-            fullWidth
-            onChange={handleChange}
-            error={errorState.title.status}
-            helperText={errorState.title.text}
-          /> */}
+          <FormGroup>
+            <Controller
+              name="title"
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  label="Title"
+                  margin="dense"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: "Title required" }}
+            />
+          </FormGroup>
 
-          <Controller
-            name="title"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextField
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...field}
-                error={errors?.title?.status}
-                helperText={errorState.title.text}
-              />
-            )}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="desc"
-            name="desc"
-            label="Description"
-            type="text"
-            multiline
-            rows={4}
-            fullWidth
-            onChange={handleChange}
-          />
-          <InputLabel htmlFor="type-native-simple">Type</InputLabel>
-          <Select
-            native
-            value={state.type}
-            onChange={handleChange}
-            inputProps={{
-              name: "type",
-              id: "age-native-simple",
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option value="Personal">Personal</option>
-            <option value="Work">Work</option>
-            <option value="Study">Study</option>
-          </Select>
+          <FormGroup>
+            <Controller
+              name="desc"
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  label="Description"
+                  margin="dense"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{ required: "Description required" }}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Controller
+              name="type"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  native
+                  value={value}
+                  onChange={onChange}
+                  inputProps={{
+                    name: "type",
+                    id: "age-native-simple",
+                  }}
+                >
+                  <option aria-label="None" value="" />
+                  <option value="personal">Personal</option>
+                  <option value="work">Work</option>
+                  <option value="study">Study</option>
+                </Select>
+              )}
+              rules={{ required: "Type required" }}
+            />
+          </FormGroup>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

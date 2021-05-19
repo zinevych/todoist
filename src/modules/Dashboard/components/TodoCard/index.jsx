@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoCard = ({ title, description }) => {
+const TodoCard = ({ title, description, type }) => {
   const classes = useStyles();
 
   return (
@@ -42,16 +42,16 @@ const TodoCard = ({ title, description }) => {
           title={title}
         />
         <CardContent className={classes.content}>
-          {/* <Typography
-            className="MuiTypography--heading"
-            variant="h6"
-            gutterBottom
-          >
-            {title}
-          </Typography> */}
-          <Typography className="MuiTypography--subheading" variant="caption">
-            {description}
-          </Typography>
+          <Grid item>
+            <Typography className="MuiTypography--subheading" variant="caption">
+              {description}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography className="MuiTypography--subheading" variant="caption">
+              {type}
+            </Typography>
+          </Grid>
         </CardContent>
       </Card>
     </Grid>
@@ -61,6 +61,7 @@ const TodoCard = ({ title, description }) => {
 TodoCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default TodoCard;
