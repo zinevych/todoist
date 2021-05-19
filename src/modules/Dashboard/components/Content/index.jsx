@@ -1,34 +1,18 @@
 /* eslint-disable react/destructuring-assignment */
-import { Button, Grid } from "@material-ui/core";
-
 import React, { useState } from "react";
+
+import { connect } from "react-redux";
+import { Button, Grid } from "@material-ui/core";
+import PropTypes from "prop-types";
+
 import TodoCard from "../TodoCard";
 import EditTodo from "../EditTodo";
 
-const initState = [
-  {
-    id: 1,
-    title: "title1",
-    description: "description1",
-    type: "personal",
-  },
-  {
-    id: 2,
-    title: "title2",
-    description: "description2",
-    type: "work",
-  },
-  {
-    id: 3,
-    title: "title3",
-    description: "description3",
-    type: "study",
-  },
-];
-
-const Content = () => {
+const Content = ({ todoItems }) => {
   // eslint-disable-next-line no-unused-vars
-  const [items, updateItems] = useState(initState);
+
+  const updateItems = () => {};
+  const items = todoItems;
   const [open, setOpen] = useState(false);
 
   const addTodoItem = ({ title, description, type }) => {
@@ -86,4 +70,18 @@ const Content = () => {
   );
 };
 
-export default Content;
+Content.propTypes = {
+  todoItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  todoItems: state.todoItems,
+});
+
+export default connect(mapStateToProps)(Content);
