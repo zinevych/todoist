@@ -8,8 +8,11 @@ import {
   Grid,
 } from "@material-ui/core";
 import Close from "@material-ui/icons/Close";
+import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
+
+import { removeTodoItem } from "../../actions/actionTypes";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -27,15 +30,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoCard = ({ title, description, type }) => {
+const TodoCard = ({ title, description, type, id, removeTodoItemAction }) => {
   const classes = useStyles();
+
+  const handleRemove = () =>
+    removeTodoItemAction({
+      title,
+      desc: description,
+      type,
+      id,
+    });
 
   return (
     <Grid item>
       <Card className={classes.card}>
         <CardHeader
           action={
-            <IconButton aria-label="settings">
+            <IconButton aria-label="settings" onClick={handleRemove}>
               <Close />
             </IconButton>
           }
@@ -62,6 +73,13 @@ TodoCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  removeTodoItemAction: PropTypes.func.isRequired,
 };
 
-export default TodoCard;
+const mapDispatchToProps = (dispatch) => ({
+  removeTodoItemAction: (todoItem) =>
+    dispatch({ type: removeTodoItem, payload: todoItem }),
+});
+
+export default connect(null, mapDispatchToProps)(TodoCard);

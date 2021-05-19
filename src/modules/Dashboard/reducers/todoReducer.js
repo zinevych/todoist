@@ -1,4 +1,5 @@
-import { addTodoItem } from "../actions/actionTypes";
+/* eslint-disable no-case-declarations */
+import { addTodoItem, removeTodoItem } from "../actions/actionTypes";
 
 const initialState = [
   {
@@ -33,6 +34,13 @@ const todoReducer = (state = initialState, action) => {
           type: action.payload.type,
         },
       ];
+    case removeTodoItem:
+      const newState = [...state];
+      newState.splice(
+        state.findIndex((item) => item.id === action.payload.id),
+        1
+      );
+      return newState;
     default:
       return state;
   }

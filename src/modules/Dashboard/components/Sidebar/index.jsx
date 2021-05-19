@@ -38,11 +38,23 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText primary="Inbox" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={RouterLink} to="/app/personal">
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
-          <ListItemText primary="Starred" />
+          <ListItemText primary="Personal" />
+        </ListItem>
+        <ListItem button component={RouterLink} to="/app/work">
+          <ListItemIcon>
+            <StarIcon />
+          </ListItemIcon>
+          <ListItemText primary="Work" />
+        </ListItem>
+        <ListItem button component={RouterLink} to="/app/removed">
+          <ListItemIcon>
+            <StarIcon />
+          </ListItemIcon>
+          <ListItemText primary="Removed" />
         </ListItem>
       </List>
     </Drawer>

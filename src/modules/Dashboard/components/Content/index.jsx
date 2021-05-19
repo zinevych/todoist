@@ -8,24 +8,11 @@ import PropTypes from "prop-types";
 import TodoCard from "../TodoCard";
 import EditTodo from "../EditTodo";
 
-const Content = ({ todoItems }) => {
+const Content = ({ todoItems, filterType }) => {
   // eslint-disable-next-line no-unused-vars
 
-  const updateItems = () => {};
   const items = todoItems;
   const [open, setOpen] = useState(false);
-
-  const addTodoItem = ({ title, description, type }) => {
-    updateItems([
-      ...items,
-      {
-        id: items.length + 1,
-        title,
-        description,
-        type,
-      },
-    ]);
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,21 +36,22 @@ const Content = ({ todoItems }) => {
           </Button>
         </Grid>
       </Grid>
-      <EditTodo
-        open={open}
-        handleClose={handleClose}
-        addTodoItem={addTodoItem}
-      />
+      <EditTodo open={open} handleClose={handleClose} />
       <div>
         <Grid container spacing={1}>
-          {items.map((item) => (
-            <TodoCard
-              title={item.title}
-              description={item.description}
-              type={item.type}
-              key={item.id}
-            />
-          ))}
+          {items
+            .filter((item) =>
+              filterType === "all" ? item : item.type === filterType
+            )
+            .map((item) => (
+              <TodoCard
+                title={item.title}
+                description={item.description}
+                type={item.type}
+                key={item.id}
+                id={item.id}
+              />
+            ))}
         </Grid>
       </div>
     </>
@@ -78,6 +66,7 @@ Content.propTypes = {
       type: PropTypes.string.isRequired,
     })
   ).isRequired,
+  filterType: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

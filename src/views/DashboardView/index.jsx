@@ -10,6 +10,7 @@ import { Switch, Route } from "react-router-dom";
 import Header from "../../modules/Dashboard/components/Header";
 import Sidebar from "../../modules/Dashboard/components/Sidebar";
 import Content from "../../modules/Dashboard/components/Content";
+import ContentRemoved from "../../modules/Dashboard/components/ContentRemoved";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +44,22 @@ const DashboardView = () => {
       <Switch>
         <Route path="/app/inbox">
           <main className={classes.appContent}>
-            <Content />
+            <Content filterType="all" />
+          </main>
+        </Route>
+        <Route path="/app/personal">
+          <main className={classes.appContent}>
+            <Content filterType="personal" />
+          </main>
+        </Route>{" "}
+        <Route path="/app/work">
+          <main className={classes.appContent}>
+            <Content filterType="work" />
+          </main>
+        </Route>{" "}
+        <Route path="/app/removed">
+          <main className={classes.appContent}>
+            <ContentRemoved />
           </main>
         </Route>
       </Switch>
