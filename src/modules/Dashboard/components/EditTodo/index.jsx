@@ -12,20 +12,20 @@ import Select from "@material-ui/core/Select";
 import FormGroup from "@material-ui/core/FormGroup";
 
 import { useForm, Controller } from "react-hook-form";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { addTodoItem } from "../../actions/actionTypes";
 
 // eslint-disable-next-line no-unused-vars
-const EditTodo = ({ open, handleClose, addTodoItemAction }) => {
+const EditTodo = ({ open, handleClose }) => {
   const { control, handleSubmit, getValues, errors } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
     if (!errors) {
       const values = getValues();
-      console.log("121212");
-      addTodoItemAction(values);
+      dispatch({ type: addTodoItem, payload: values });
 
       handleClose();
     }
@@ -123,12 +123,6 @@ const EditTodo = ({ open, handleClose, addTodoItemAction }) => {
 EditTodo.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  addTodoItemAction: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addTodoItemAction: (todoItem) =>
-    dispatch({ type: addTodoItem, payload: todoItem }),
-});
-
-export default connect(null, mapDispatchToProps)(EditTodo);
+export default EditTodo;

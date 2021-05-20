@@ -1,17 +1,17 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState } from "react";
 
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
 import PropTypes from "prop-types";
 
 import TodoCard from "../TodoCard";
 import EditTodo from "../EditTodo";
 
-const Content = ({ todoItems, filterType }) => {
+const Content = ({ filterType }) => {
   // eslint-disable-next-line no-unused-vars
 
-  const items = todoItems;
+  const items = useSelector((state) => state.todoItems);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -59,18 +59,7 @@ const Content = ({ todoItems, filterType }) => {
 };
 
 Content.propTypes = {
-  todoItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    })
-  ).isRequired,
   filterType: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  todoItems: state.todoItems,
-});
-
-export default connect(mapStateToProps)(Content);
+export default Content;
