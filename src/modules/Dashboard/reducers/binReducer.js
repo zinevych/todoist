@@ -1,11 +1,11 @@
 /* eslint-disable no-case-declarations */
-import { removeTodoItem } from "../actions/actionTypes";
+import { REMOVE_TODO_ITEM } from "../actions/actionTypes";
 
 const initialState = [];
 
 const binReducer = (state = initialState, action) => {
   switch (action.type) {
-    case removeTodoItem:
+    case REMOVE_TODO_ITEM:
       return [
         ...state,
         {

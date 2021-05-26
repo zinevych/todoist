@@ -15,7 +15,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-import { addTodoItem } from "../../actions/actionTypes";
+import { ADD_TODO_ITEM } from "../../actions/actionTypes";
 
 // eslint-disable-next-line no-unused-vars
 const EditTodo = ({ open, handleClose }) => {
@@ -25,7 +25,7 @@ const EditTodo = ({ open, handleClose }) => {
   const onSubmit = () => {
     if (!errors) {
       const values = getValues();
-      dispatch({ type: addTodoItem, payload: values });
+      dispatch({ type: ADD_TODO_ITEM, payload: values });
 
       handleClose();
     }

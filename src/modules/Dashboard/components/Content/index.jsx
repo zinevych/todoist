@@ -1,18 +1,24 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
 import PropTypes from "prop-types";
 
 import TodoCard from "../TodoCard";
 import EditTodo from "../EditTodo";
+import { fetchItems } from "../../actions/actions";
 
 const Content = ({ filterType }) => {
   // eslint-disable-next-line no-unused-vars
 
   const items = useSelector((state) => state.todoItems);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchItems());
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);

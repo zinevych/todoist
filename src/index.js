@@ -2,8 +2,9 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginView from "./views/LoginView";
@@ -12,10 +13,10 @@ import DashboardView from "./views/DashboardView";
 import rootReducer from "./rootReducer";
 import "./index.css";
 
-const store = createStore(
-  rootReducer,
+const store = compose(
+  applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+)(createStore)(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>

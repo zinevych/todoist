@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { removeTodoItem } from "../../actions/actionTypes";
+import { REMOVE_TODO_ITEM } from "../../actions/actionTypes";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -79,7 +79,7 @@ TodoCard.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   removeTodoItemAction: (todoItem) =>
-    dispatch({ type: removeTodoItem, payload: todoItem }),
+    dispatch({ type: REMOVE_TODO_ITEM, payload: todoItem }),
 });
 
 export default connect(null, mapDispatchToProps)(TodoCard);
