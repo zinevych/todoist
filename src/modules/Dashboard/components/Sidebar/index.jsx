@@ -10,6 +10,8 @@ import StarIcon from "@material-ui/icons/Star";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 
+import { useRemovedCount } from "../../hooks";
+
 const useStyles = makeStyles(() => ({
   drawer: {
     width: 200,
@@ -24,7 +26,9 @@ const useStyles = makeStyles(() => ({
 
 const Sidebar = () => {
   const classes = useStyles();
+  const [count] = useRemovedCount();
 
+  const secondaryText = `${count} items`;
   return (
     <Drawer
       variant="permanent"
@@ -54,7 +58,7 @@ const Sidebar = () => {
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
-          <ListItemText primary="Removed" />
+          <ListItemText primary="Removed" secondary={secondaryText} />
         </ListItem>
       </List>
     </Drawer>
